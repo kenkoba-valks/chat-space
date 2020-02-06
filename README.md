@@ -1,7 +1,7 @@
 ## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
-|username|string|null: false|
+|name|string|null: false|
 |email|string|null: false|
 |password|string|null: false|
 
@@ -24,7 +24,7 @@
 ## messagesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|content|text|null: false|
+|content|text|
 |image|string|
 |user_id|integer|null: false, foreign_key:true|
 |group_id|integer|null: false, foreign_key:true|
