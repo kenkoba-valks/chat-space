@@ -1,0 +1,173 @@
+*{
+  box-sizing: border-box;
+}
+.wrapper{
+  display: flex;
+}
+
+.sidebar{
+  height: 100vh;
+  width: 300px;
+  &__username{
+    height: 100px;
+    background-color: #253141;
+    display: flex;
+    align-items: center;
+      &-brank{
+      height: 20px;
+      width: 260px;
+      margin: 0 20px;
+      display: flex;
+      justify-content: space-between;
+        &-left{
+          width: 60px;
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+        }
+        &-right{
+          width: 60px;
+          text-align: right;
+        }
+       }
+  }
+  &__index{
+    color: white;
+    font-weight: bold;
+    padding: 0 20px;
+    height: calc(100vh - 100px);
+    background-color: #2f3e51;
+    &-first{
+      height: 65px;
+      padding: 20px 0 40px;
+      &-groupname{
+        font-size: 15px;
+      }
+      &-content{
+        font-size: 11px;
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.mainchat{
+  height: 100vh;
+  width: calc(100% - 300px);
+  &__group{
+    height: 100px;
+    background-color: #ffffff;
+    border-bottom: #eeeeee;
+    display: flex;
+    justify-content: space-between;
+    &-name{
+      font-size: 20px;
+      color: #333333;
+      margin: 35px 40px 0;
+    }
+    &-edit{
+      height: 40px;
+      width: 72px;
+      line-height: 40px;
+      text-align: center;
+      margin: 28px 0;
+      margin-right: 30px;
+    }
+  }
+  &__contents{
+    height: calc(100vh - 190px);
+    background-color: #fafafa;
+    &-first{
+      padding: 35px 0 46px 40px;
+      &-item{
+        display: flex;
+        &-username{
+          font-size: 16px;
+          color: #333333;
+          height: 16px;
+          margin-right: 10px;
+        }
+        &-date{
+          font-size: 12px;
+          color: $fontGreyColor;
+          height: 16px;
+        }
+      }
+      &-message{
+        font-size: 14px;
+        color: #434a54;
+        margin-top: 12px;
+      }
+    }
+  }
+  &__textbox{
+    height: 90px;
+    background-color: #d2d2d2;
+  }
+}
+
+
+.contents__btn{
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+.member-list{
+  font-size: 12px;
+  display: flex;
+  margin-top: 15px;
+  color: $fontGreyColor;
+  &-first{
+    font-size: 12px;
+    color: $fontGreyColor;
+    list-style: none;
+  }
+}
+
+.edit__btn{
+  font-size: 16px;
+  color: $fontSkyblueColor;
+  border: 1px solid  $fontSkyblueColor;
+  text-decoration: none;
+  padding: 10px 20px;
+}
+
+.input-box{
+  justify-content: space-between;
+  display: flex;
+  padding: 20px;
+  margin-left: 15px;
+  position: relative;
+}
+
+.input-text{
+  font-size: 16px;
+  height: 50px;
+  width: 100%;
+  padding: 0 15px;
+  color: #434a54;
+  border-style: none;
+}
+
+
+.submit-btn{
+  height: 50px;
+  width: 100px;
+  background-color: $fontSkyblueColor;
+  color: white;
+  cursor: pointer;
+  margin-right: 40px;
+  margin-left: 15px;
+}
+
+.text{
+  color: black;
+  position: absolute;
+  right: 180px;
+  top: 35px;
+}
+
+
+
+
