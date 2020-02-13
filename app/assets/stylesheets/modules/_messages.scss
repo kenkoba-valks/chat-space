@@ -28,6 +28,7 @@
         &-right{
           width: 60px;
           text-align: right;
+          color: white;
         }
        }
   }
@@ -103,6 +104,7 @@
   &__textbox{
     height: 90px;
     background-color: #d2d2d2;
+
   }
 }
 
@@ -138,7 +140,6 @@
   display: flex;
   padding: 20px;
   margin-left: 15px;
-  position: relative;
 }
 
 .input-text{
@@ -150,24 +151,36 @@
   border-style: none;
 }
 
+.new_message{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
 
-.submit-btn{
+.form__message{
+  width: 1000px;
+  height: 50px;
+  margin-top: 20px;
+  margin-left: 40px;
+}
+
+.hidden{
+  display: none;
+}
+
+.form__submit{
   height: 50px;
   width: 100px;
   background-color: $fontSkyblueColor;
   color: white;
   cursor: pointer;
   margin-right: 40px;
-  margin-left: 15px;
+  margin-top: 20px;
 }
 
-.text{
-  color: black;
+.image-icon{
   position: absolute;
-  right: 180px;
   top: 35px;
+  right: 150px;
 }
-
-
-
 
