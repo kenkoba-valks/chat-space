@@ -1,31 +1,25 @@
 .mainchat
   .mainchat__group
     .mainchat__group-name
-      TECH::CAMP
-      %ul.member-list
-        Member:
-        %li.member-list-first 
-          masa
+      = @group.name
+      .member-list
+        - @group.users.each do |user|
+          = user.name
     .mainchat__group-edit
-      = link_to "#", class: "edit__btn" do
+      = link_to edit_group_path(@group.id), class: "edit__btn" do
         Edit
   .mainchat__contents
-    .mainchat__contents-first
-      .mainchat__contents-first-item
-        .mainchat__contents-first-item-username
-          masa
-        .mainchat__contents-first-item-date
-          2020/02/08(Sat) 13:24:26
-      .mainchat__contents-first-message
-        こんにちは
+    = render @messages
   .mainchat__textbox
-    %form.new-message
-      .input-box
-        %input.input-text{:placeholder => "type a message", :type => "text"}/
-        %label.text(for="upload-image")
-          = icon('fas', 'image')
-        %input{type: "file",style:"display:none",id:"upload-image"}
-        %input.submit-btn{:name => "commit", :type => "submit", :value => "Send"}/
-        
+    .form
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+        .form__mask
+          = f.label :image, class: 'form__mask__image' do
+            = icon('fas', 'image', class: 'image-icon')
+            = f.file_field :image, class: 'hidden'
+        = f.submit 'Send', class: 'form__submit'
+
   
+
 
