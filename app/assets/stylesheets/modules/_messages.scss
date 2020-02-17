@@ -78,6 +78,7 @@
   &__contents{
     height: calc(100vh - 190px);
     background-color: #fafafa;
+    overflow: scroll;
     &-first{
       padding: 35px 0 46px 40px;
       &-item{
