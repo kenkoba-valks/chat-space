@@ -1,62 +1,62 @@
 $(function(){
   var buildHTML = function(message) {
     if (message.content && message.image) {
-      var html = `<div class="message" data-message-id=` + message.id + `>` +
-      `<div class="mainchat__contents-first">` +
-        `<div class="mainchat__contents-first-item">` +
-          `<div class="mainchat__contents-first-item-username">` +
-            message.user_name +
-          `</div>` +
-          `<div class="mainchat__contents-first-item-date">` +
-            message.created_at +
-          `</div>` +
-        `</div>` +
-        `<div class="mainchat__contents-first-content">` +
-          `<p class="mainchat__contents-first-message-content">` +
-            message.content +
-          `</p>` +
-          `<img src="` + message.image + `" class="mainchat__contents-first-content__image" >` +
-        `</div>` +
-        `</div>` +
-      `</div>`
+      var html = `<div class="message" data-message-id="${message.id}" >
+      <div class="mainchat__contents-first">
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name}
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at} 
+          </div>
+        </div>
+        <div class="mainchat__contents-first-content">
+          <p class="mainchat__contents-first-message-content">
+            ${message.content} 
+          </p> 
+          <img src="${message.image}"  class="mainchat__contents-first-content__image" >
+        </div>
+        </div>
+      </div>`;
     } else if (message.content) {
-      var html = `<div class="message" data-message-id=` + message.id + `>` +
-      `<div class="mainchat__contents-first">` +
-        `<div class="mainchat__contents-first-item">` +
-          `<div class="mainchat__contents-first-item-username">` +
-            message.user_name +
-          `</div>` +
-          `<div class="mainchat__contents-first-item-date">` +
-            message.created_at +
-          `</div>` +
-        `</div>` +
-        `<div class="mainchat__contents-first-content">` +
-          `<p class="mainchat__contents-first-message-content">` +
-            message.content +
-          `</p>` +
-        `</div>` +
-        `</div>` +
-      `</div>`
+      var html = `<div class="message" data-message-id="${message.id}"> 
+      <div class="mainchat__contents-first">
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name} 
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at}
+          </div>
+        </div> 
+        <div class="mainchat__contents-first-content">
+          <p class="mainchat__contents-first-message-content">
+            ${message.content}
+          </p> 
+        </div> 
+        </div> 
+      </div>`;
     } else if (message.image) {
-      var html = `<div class="message" data-message-id=` + message.id + `>` +
-      `<div class="mainchat__contents-first">` +
-        `<div class="mainchat__contents-first-item">` +
-          `<div class="mainchat__contents-first-item-username">` +
-            message.user_name +
-          `</div>` +
-          `<div class="mainchat__contents-first-item-date">` +
-            message.created_at +
-          `</div>` +
-        `</div>` +
-        `<div class="mainchat__contents-first-content">` +
-          `<img src="` + message.image + `" class="mainchat__contents-first-content__image" >` +
-        `</div>` +
-        `</div>` +
-      `</div>`
+      var html = `<div class="message" data-message-id="${message.id}"> 
+      <div class="mainchat__contents-first"> 
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name}
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at}
+          </div> 
+        </div>
+        <div class="mainchat__contents-first-content"> 
+          <img src="${message.image}" class="mainchat__contents-first-content__image" > 
+        </div> 
+        </div> 
+      </div>`;
 
-    };
+    }
     return html;
-  }
+  };
   
 
 
@@ -104,7 +104,7 @@ $(function(){
       }
     })
     .fail(function() {
-      console.log('error');
+      alert("メッセージ送信に失敗しました");
     });
   };
   if (document.location.href.match(/\/groups\/\d+\/messages/)) {
