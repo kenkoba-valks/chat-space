@@ -1,72 +1,113 @@
-$(function() {
-  function addUser(user) {
-    let html = `
-      <div class="chat-group-user clearfix">
-        <p class="chat-group-user__name">${user.name}</p>
-        <div class="user-search-add chat-group-user__btn chat-group-user__btn--add" data-user-id="${user.id}" data-user-name="${user.name}">追加</div>
-      </div>
-    `;
-    $("#user-search-result").append(html);
-  }
+$(function(){
+  var buildHTML = function(message) {
+    if (message.content && message.image) {
+      var html = `<div class="message" data-message-id="${message.id}" >
+      <div class="mainchat__contents-first">
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name}
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at} 
+          </div>
+        </div>
+        <div class="mainchat__contents-first-content">
+          <p class="mainchat__contents-first-message-content">
+            ${message.content} 
+          </p> 
+          <img src="${message.image}"  class="mainchat__contents-first-content__image" >
+        </div>
+        </div>
+      </div>`;
+    } else if (message.content) {
+      var html = `<div class="message" data-message-id="${message.id}"> 
+      <div class="mainchat__contents-first">
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name} 
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at}
+          </div>
+        </div> 
+        <div class="mainchat__contents-first-content">
+          <p class="mainchat__contents-first-message-content">
+            ${message.content}
+          </p> 
+        </div> 
+        </div> 
+      </div>`;
+    } else if (message.image) {
+      var html = `<div class="message" data-message-id="${message.id}"> 
+      <div class="mainchat__contents-first"> 
+        <div class="mainchat__contents-first-item">
+          <div class="mainchat__contents-first-item-username">
+            ${message.user_name}
+          </div>
+          <div class="mainchat__contents-first-item-date">
+            ${message.created_at}
+          </div> 
+        </div>
+        <div class="mainchat__contents-first-content"> 
+          <img src="${message.image}" class="mainchat__contents-first-content__image" > 
+        </div> 
+        </div> 
+      </div>`;
 
-  function addNoUser() {
-    let html = `
-      <div class="chat-group-user clearfix">
-        <p class="chat-group-user__name">ユーザーが見つかりません</p>
-      </div>
-    `;
-    $("#user-search-result").append(html);
-  }
-  function addDeleteUser(name, id) {
-    let html = `
-    <div class="chat-group-user clearfix" id="${id}">
-      <p class="chat-group-user__name">${name}</p>
-      <div class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn" data-user-id="${id}" data-user-name="${name}">削除</div>
-    </div>`;
-    $(".js-add-user").append(html);
-  }
-  function addMember(userId) {
-    let html = `<input value="${userId}" name="group[user_ids][]" type="hidden" id="group_user_ids_${userId}" />`;
-    $(`#${userId}`).append(html);
-  }
-  $("#user-search-field").on("keyup", function() {
-    let input = $("#user-search-field").val();
+    }
+    return html;
+  };
+  
+
+
+  $('#new_message').on('submit', function(e){
+    
+    e.preventDefault()
+    var formData = new FormData(this);
+    var url = $(this).attr('action');
     $.ajax({
-      type: "GET",
-      url: "/users",
-      data: { keyword: input },
-      dataType: "json"
+      url: url,
+      type: 'POST',
+      data: formData,  
+      dataType: 'json',
+      processData: false,
+      contentType: false
     })
-      .done(function(users) {
-        $("#user-search-result").empty();
+    .done(function(data){
+      var html = buildHTML(data);
+      $('.mainchat__contents').append(html);      
+      $('form')[0].reset();
+      $('.mainchat__contents').animate({ scrollTop: $('.mainchat__contents')[0].scrollHeight});
+      $('.form__submit').prop('disabled', false);
+    })
+    .fail(function() {
+      alert("メッセージ送信に失敗しました");
+    })
+  })
 
-        if (users.length !== 0) {
-          users.forEach(function(user) {
-            addUser(user);
-          });
-        } else if (input.length == 0) {
-          return false;
-        } else {
-          addNoUser();
-        }
-      })
-      .fail(function() {
-        alert("通信エラーです。ユーザーが表示できません。");
-      });
-  });
-  $(document).on("click", ".chat-group-user__btn--add", function() {
-    console.log
-    const userName = $(this).attr("data-user-name");
-    const userId = $(this).attr("data-user-id");
-    $(this)
-      .parent()
-      .remove();
-    addDeleteUser(userName, userId);
-    addMember(userId);
-  });
-  $(document).on("click", ".chat-group-user__btn--remove", function() {
-    $(this)
-      .parent()
-      .remove();
-  });
+  var reloadMessages = function() {
+    last_message_id = $('.message:last').data("message-id");
+    $.ajax({
+      url: "api/messages",
+      type: 'get',
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(messages) {
+      if (messages.length !== 0) {
+        var insertHTML = '';
+        $.each(messages, function(i, message) {
+          insertHTML += buildHTML(message)
+        });
+        $('.mainchat__contents').append(insertHTML);
+        $('.mainchat__contents').animate({ scrollTop: $('.mainchat__contents')[0].scrollHeight});
+      }
+    })
+    .fail(function() {
+      alert("メッセージ送信に失敗しました");
+    });
+  };
+  if (document.location.href.match(/\/groups\/\d+\/messages/)) {
+    setInterval(reloadMessages, 7000);
+  }
 });
