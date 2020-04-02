@@ -26,3 +26,14 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email)
   end
 end
+
+
+
+if @message.save
+  # メッセージの保存に成功した場合
+  redirect_to :index, notice: 'メッセージの送信に成功しました'
+else
+  # メッセージの保存に失敗した場合
+  flash.now[:error] = 'メッセージの送信に失敗しました'
+  render :index
+end
